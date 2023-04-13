@@ -1,7 +1,4 @@
-import { greetUser } from '$utils/greet';
-
-window.Webflow ||= [];
-window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
-});
+// import { audioVisualizer } from '$utils/audio-visualizer';
+import { player } from '$utils/player';
+document.addEventListener('DOMContentLoaded', player);
+document.addEventListener('DOMContentLoaded', audioVisualizer);
