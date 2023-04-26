@@ -13,6 +13,8 @@ export const player = () => {
     }
   });
 
+  const audioPlyr = new Plyr('audio', {});
+
   const modalPlyr = Plyr.setup('#player-modal', {
     controls: [
       'play-large', // The large play button in the center
@@ -36,6 +38,7 @@ export const player = () => {
     fullscreen: {
       iosNative: true,
     },
+    hideControls: false,
   });
 
   const workPlayers = Plyr.setup('#player-work-gallery', {
@@ -66,15 +69,21 @@ export const player = () => {
 
   // Play videos on hover
   workPlayersEl.forEach((player, i) => {
-    player.addEventListener('mouseover', () => {
-      workPlayers[i].play();
-    });
+    const modalCategory = document.querySelector('#player-category');
+
+    if (modalCategory !== 'Voices') {
+      player.addEventListener('mouseover', () => {
+        workPlayers[i].play();
+        workPlayers[i].muted = true;
+      });
+    }
   });
 
   // Stop videos on hover
   workPlayersEl.forEach((player, i) => {
     player.addEventListener('mouseleave', () => {
       workPlayers[i].stop();
+      workPlayers[i].muted = true;
     });
   });
 
@@ -93,6 +102,9 @@ export const player = () => {
       const itemSrc = workPlayersData[i].getAttribute('data-src');
       const itemPosterSrc = workPlayersData[i].getAttribute('data-poster');
       const itemSoundDesigner = workPlayersData[i].getAttribute('data-sounddesigner');
+      const audioCover = document
+        .querySelector('.player_wrapper')
+        ?.querySelector('.player_audio-only-bg');
 
       modalTitle.textContent = itemTitle;
       modalCategory.textContent = itemCategory;
@@ -112,9 +124,14 @@ export const player = () => {
         poster: itemPosterSrc,
       };
 
+      modalPlyr[0].elements.controls?.classList.add('plyr__audio-only');
       modal?.classList.toggle('is-active');
       modalPlyr[0].play();
       modalPlyr[0].volume = 0.5;
+
+      if (itemCategory === 'Voices') {
+        audioCover?.classList.add('is-active');
+      }
     });
 
     // Close modal when div is clicked, except for when the click target is on the player modal container
