@@ -6,6 +6,9 @@ export const player = () => {
   const workPlayersData = [...document.querySelectorAll('.work_data')];
   const modal = document.querySelector('.player_modal');
   const modalContainer = document.querySelector('.player_container');
+  const audioCover = document
+    .querySelector('.player_wrapper')
+    ?.querySelector('.player_audio-only-bg');
 
   modalContainer?.addEventListener('click', (e) => {
     if (e.currentTarget !== modalContainer) {
@@ -69,9 +72,7 @@ export const player = () => {
 
   // Play videos on hover
   workPlayersEl.forEach((player, i) => {
-    const modalCategory = document.querySelector('#player-category');
-
-    if (modalCategory !== 'Voices') {
+    if (workPlayersData[i].dataset.category !== 'Voices') {
       player.addEventListener('mouseover', () => {
         workPlayers[i].play();
         workPlayers[i].muted = true;
@@ -99,9 +100,6 @@ export const player = () => {
       const itemSrc = workPlayersData[i].getAttribute('data-src');
       const itemPosterSrc = workPlayersData[i].getAttribute('data-poster');
       const itemSoundDesigner = workPlayersData[i].getAttribute('data-sounddesigner');
-      const audioCover = document
-        .querySelector('.player_wrapper')
-        ?.querySelector('.player_audio-only-bg');
 
       modalTitle.textContent = itemTitle;
       modalCategory.textContent = itemCategory;
@@ -139,6 +137,7 @@ export const player = () => {
     modal?.addEventListener('click', function (e) {
       if (e.target !== modalContainer && !modalContainer?.contains(e.target)) {
         modal.classList.toggle('is-active');
+        audioCover.classList.remove('is-active');
         modalPlyr[0].stop();
       }
     });
