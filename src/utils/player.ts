@@ -76,15 +76,12 @@ export const player = () => {
         workPlayers[i].play();
         workPlayers[i].muted = true;
       });
-    }
-  });
 
-  // Stop videos on hover
-  workPlayersEl.forEach((player, i) => {
-    player.addEventListener('mouseleave', () => {
-      workPlayers[i].stop();
-      workPlayers[i].muted = true;
-    });
+      player.addEventListener('mouseleave', () => {
+        workPlayers[i].stop();
+        workPlayers[i].muted = true;
+      });
+    }
   });
 
   // Open modal on click
@@ -111,6 +108,10 @@ export const player = () => {
       modalClient.textContent = itemClient;
       modalBrand.textContent = itemBrand;
       modalName.textContent = itemSoundDesigner;
+
+      if (itemSoundDesigner === '') {
+        modalName?.parentElement?.classList.add('is-hidden');
+      }
 
       modalPlyr[0].source = {
         type: 'video',
