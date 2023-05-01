@@ -9,6 +9,7 @@ export const player = () => {
   const audioCover = document
     .querySelector('.player_wrapper')
     ?.querySelector('.player_audio-only-bg');
+  const iconClose = document.querySelector('.player_icon-close');
 
   modalContainer?.addEventListener('click', (e) => {
     if (e.currentTarget !== modalContainer) {
@@ -124,7 +125,7 @@ export const player = () => {
       };
 
       modalPlyr[0].elements.controls?.classList.add('plyr__audio-only');
-      modal?.classList.toggle('is-active');
+      modal?.classList.toggle('add');
       modalPlyr[0].play();
       modalPlyr[0].volume = 0.5;
 
@@ -133,13 +134,10 @@ export const player = () => {
       }
     });
 
-    // Close modal when div is clicked, except for when the click target is on the player modal container
-    modal?.addEventListener('click', function (e) {
-      if (e.target !== modalContainer && !modalContainer?.contains(e.target)) {
-        modal.classList.toggle('is-active');
-        audioCover.classList.remove('is-active');
-        modalPlyr[0].stop();
-      }
+    iconClose?.addEventListener('click', function (e) {
+      modal.classList.remove('is-active');
+      audioCover.classList.remove('is-active');
+      modalPlyr[0].stop();
     });
   });
 };
