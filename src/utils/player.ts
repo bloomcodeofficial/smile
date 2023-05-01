@@ -11,11 +11,11 @@ export const player = () => {
     ?.querySelector('.player_audio-only-bg');
   const iconClose = document.querySelector('.player_icon-close');
 
-  modalContainer?.addEventListener('click', (e) => {
-    if (e.currentTarget !== modalContainer) {
-      modal?.classList.toggle('is-active');
-    }
-  });
+  // modalContainer?.addEventListener('click', (e) => {
+  //   if (e.currentTarget !== modalContainer) {
+  //     modal?.classList.toggle('is-active');
+  //   }
+  // });
 
   const audioPlyr = new Plyr('audio', {});
 
@@ -124,8 +124,8 @@ export const player = () => {
         poster: itemPosterSrc,
       };
 
-      modalPlyr[0].elements.controls?.classList.add('plyr__audio-only');
-      modal?.classList.toggle('add');
+      modalPlyr[0].elements.controls.classList.add('plyr__audio-only');
+      modal.classList.add('is-active');
       modalPlyr[0].play();
       modalPlyr[0].volume = 0.5;
 
@@ -134,7 +134,7 @@ export const player = () => {
       }
     });
 
-    iconClose?.addEventListener('click', function (e) {
+    iconClose.addEventListener('click', function (e) {
       modal.classList.remove('is-active');
       audioCover.classList.remove('is-active');
       modalPlyr[0].stop();
