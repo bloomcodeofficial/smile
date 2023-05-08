@@ -5,7 +5,6 @@ export const player = () => {
   const workPlayersEl = [...document.querySelectorAll('.work_item')];
   const workPlayersData = [...document.querySelectorAll('.work_data')];
   const modal = document.querySelector('.player_modal');
-  const modalContainer = document.querySelector('.player_container');
   const audioCover = document
     .querySelector('.player_wrapper')
     ?.querySelector('.player_audio-only-bg');
@@ -73,17 +72,15 @@ export const player = () => {
 
   // Play videos on hover
   workPlayersEl.forEach((player, i) => {
-    if (workPlayersData[i].dataset.category !== 'Voices') {
-      player.addEventListener('mouseover', () => {
-        workPlayers[i].play();
-        workPlayers[i].muted = true;
-      });
+    player.addEventListener('mouseover', () => {
+      workPlayers[i].play();
+      workPlayers[i].muted = true;
+    });
 
-      player.addEventListener('mouseleave', () => {
-        workPlayers[i].stop();
-        workPlayers[i].muted = true;
-      });
-    }
+    player.addEventListener('mouseleave', () => {
+      workPlayers[i].stop();
+      workPlayers[i].muted = true;
+    });
   });
 
   // Open modal on click
@@ -124,20 +121,18 @@ export const player = () => {
         poster: itemPosterSrc,
       };
 
-      modalPlyr[0].elements.controls.classList.add('plyr__audio-only');
       modal.classList.add('is-active');
       modalPlyr[0].play();
       modalPlyr[0].volume = 0.5;
-
-      if (itemCategory === 'Voices') {
-        audioCover?.classList.add('is-active');
-      }
     });
 
-    iconClose.addEventListener('click', function (e) {
-      modal.classList.remove('is-active');
-      audioCover.classList.remove('is-active');
-      modalPlyr[0].stop();
+    modal?.addEventListener('click', function (e) {
+      const clicked = e.target.closest('.player_component');
+      if (!clicked) {
+        modal.classList.remove('is-active');
+        audioCover.classList.remove('is-active');
+        modalPlyr[0].stop();
+      }
     });
   });
 };
